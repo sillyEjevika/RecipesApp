@@ -1,9 +1,12 @@
 package me.loginova.recipesapp.controllers;
 
+import me.loginova.recipesapp.model.Ingredient;
 import me.loginova.recipesapp.model.Recipe;
 import me.loginova.recipesapp.service.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/recipe")
@@ -22,7 +25,18 @@ public class RecipeController {
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getById(@PathVariable Long id) {
         return ResponseEntity.of(recipeService.getById(id));
-
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> update(@PathVariable Long id, @RequestBody Recipe recipe) {
+        return ResponseEntity.ok(recipeService.update(id, recipe));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Recipe> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(recipeService.delete(id));
+    }
+    @GetMapping
+    public ResponseEntity<Map<Long, Recipe>> getAll() {
+        return ResponseEntity.ok(recipeService.getAll());
     }
 }
 
