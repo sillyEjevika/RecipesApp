@@ -1,8 +1,8 @@
-package me.loginova.recipesapp.service;
+package me.loginova.recipesapp.service.impl;
 
 import me.loginova.recipesapp.exception.ValidationException;
-import me.loginova.recipesapp.model.Ingredient;
 import me.loginova.recipesapp.model.Recipe;
+import me.loginova.recipesapp.service.RecipeService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class RecipeServiceImpl implements RecipeService{
+public class RecipeServiceImpl implements RecipeService {
     private static long idCounter = 1;
     private final Map<Long, Recipe> recipes = new HashMap<>();
     private final ValidationServiceImpl validationService;

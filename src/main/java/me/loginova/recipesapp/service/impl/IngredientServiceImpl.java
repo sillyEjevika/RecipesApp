@@ -1,7 +1,8 @@
-package me.loginova.recipesapp.service;
+package me.loginova.recipesapp.service.impl;
 
 import me.loginova.recipesapp.exception.ValidationException;
 import me.loginova.recipesapp.model.Ingredient;
+import me.loginova.recipesapp.service.IngredientService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

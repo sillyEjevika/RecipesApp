@@ -1,7 +1,8 @@
-package me.loginova.recipesapp.service;
+package me.loginova.recipesapp.service.impl;
 
 import me.loginova.recipesapp.model.Ingredient;
 import me.loginova.recipesapp.model.Recipe;
+import me.loginova.recipesapp.service.ValidationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
