@@ -1,7 +1,8 @@
-package me.loginova.recipesapp.service;
+package me.loginova.recipesapp.service.impl;
 
 import me.loginova.recipesapp.exception.ValidationException;
 import me.loginova.recipesapp.model.Ingredient;
+import me.loginova.recipesapp.service.IngredientService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -28,5 +29,23 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Optional<Ingredient> getById(Long id) {
         return Optional.ofNullable(ingredients.get(id));
+    }
+
+    @Override
+    public Ingredient update(Long id, Ingredient ingredient) {
+        if (!validationService.validate(ingredient)) {
+            throw new ValidationException(ingredient.toString());
+        }
+        return ingredients.replace(id, ingredient);
+    }
+
+    @Override
+    public Ingredient delete(Long id) {
+        return ingredients.remove(id);
+    }
+
+    @Override
+    public Map<Long, Ingredient> getAll() {
+        return ingredients;
     }
 }

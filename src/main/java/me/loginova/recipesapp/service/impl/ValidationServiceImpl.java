@@ -1,7 +1,9 @@
-package me.loginova.recipesapp.service;
+package me.loginova.recipesapp.service.impl;
 
 import me.loginova.recipesapp.model.Ingredient;
 import me.loginova.recipesapp.model.Recipe;
+import me.loginova.recipesapp.service.ValidationService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,6 +12,7 @@ public class ValidationServiceImpl implements ValidationService {
     public boolean validate(Recipe recipe) {
         return recipe!=null
                 && recipe.getName() !=null
+                && StringUtils.isEmpty(recipe.getName())
                 && recipe.getSteps() !=null
                 && recipe.getIngredients() != null
                 && !recipe.getIngredients().isEmpty()
@@ -20,6 +23,6 @@ public class ValidationServiceImpl implements ValidationService {
     public boolean validate(Ingredient ingredient) {
         return ingredient !=null
                 && ingredient.getName() !=null
-                ;
+                && StringUtils.isEmpty(ingredient.getName());
     }
 }
