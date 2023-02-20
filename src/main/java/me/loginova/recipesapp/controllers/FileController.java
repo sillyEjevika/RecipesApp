@@ -39,7 +39,26 @@ public class FileController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @GetMapping("/recipe/export/txt")
+    @Operation(
+            summary = "Выгрузка файлов рецептов в формате Txt"
+    )
+    public ResponseEntity<InputStreamResource> downloadRecipesTxtFile() {
+        try {
+            File recipeFile = recipeService.prepareRecipesTxt();
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(recipeFile));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentLength(recipeFile.length())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + recipeFile.getName())
+                    .body(resource);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
     }
 

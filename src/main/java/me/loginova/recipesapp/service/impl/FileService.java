@@ -57,6 +57,12 @@ public class FileService {
             bis.transferTo(bos);
         }
     }
+
+    public Path saveToFile(String content, Path path) throws IOException {
+        creatNewFile(path);
+        return Files.writeString(path, content);
+
+    }
     private void creatNewFile (Path path) throws IOException {
         Files.deleteIfExists(path);
         Files.createFile(path);

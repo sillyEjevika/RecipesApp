@@ -3,6 +3,7 @@ package me.loginova.recipesapp.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.RequiredArgsConstructor;
 import me.loginova.recipesapp.exception.ValidationException;
+import me.loginova.recipesapp.model.Ingredient;
 import me.loginova.recipesapp.model.Recipe;
 import me.loginova.recipesapp.service.RecipeService;
 import me.loginova.recipesapp.service.ValidationService;
@@ -29,6 +30,8 @@ public class RecipeServiceImpl implements RecipeService {
     private String recipesFilePath;
     @Value("${name.of.recipes.file}")
     private String recipesFileName;
+    @Value("${name.of.recipes.txt.file}")
+    private String recipesTxtFileName;
     private Path recipesPath;
 
     @Override
@@ -79,11 +82,36 @@ public class RecipeServiceImpl implements RecipeService {
         recipes = fileService.readMapFromFile(recipesPath, new TypeReference<HashMap<Long, Recipe>>() {});
     }
 
+    @Override
+    public File prepareRecipesTxt() throws IOException {
+        return fileService
+                .saveToFile(recipeToString(), Path.of(recipesFilePath, recipesTxtFileName))
+                .toFile();
+    }
+
     @PostConstruct
     private void init() {
         recipesPath = Path.of(recipesFilePath, recipesFileName);
         recipes = fileService.readMapFromFile(recipesPath, new TypeReference<HashMap<Long, Recipe>>() {});
 
+    }
+
+    private String recipeToString() {
+        StringBuilder sb = new StringBuilder();
+        String listEl = "❥";
+
+        for (Recipe recipe : recipes.values()) {
+            sb.append("\n").append(recipe.toString()).append("\n");
+            sb.append("\nИнгредиенты: \n");
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                sb.append(listEl).append(ingredient.toString()).append("\n");
+            }
+            sb.append("\nИнструкция приготовления: \n");
+            for (String step : recipe.getSteps()) {
+                sb.append(listEl).append(step).append("\n");
+            }
+        }
+        return sb.append("\n").toString();
     }
 }
 
