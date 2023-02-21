@@ -1,7 +1,10 @@
 package me.loginova.recipesapp.service;
 
 import me.loginova.recipesapp.model.Ingredient;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -15,4 +18,7 @@ public interface IngredientService {
     Ingredient delete(Long id);
 
     Map<Long, Ingredient> getAll();
+
+    File readFile();
+    void uploadFile(MultipartFile file) throws IOException;
 }
